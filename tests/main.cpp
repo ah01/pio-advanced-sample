@@ -17,7 +17,7 @@ test(core_counter_increment_value)
     assertTrue(r);
 
     int v = core_get_counter();
-    assertEqual(v, 0);
+    assertEqual(v, 1);
 }
 
 test(core_counter_max_value)
