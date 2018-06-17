@@ -35,3 +35,4 @@ install:
 script:
     - platformio run
     - platformio run -e test_linux
+    - ./.pioenvs/test_linux/program
