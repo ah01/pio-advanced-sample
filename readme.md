@@ -1,5 +1,7 @@
 # Platformio advance sample for Arduino platform
 
+[![Build Status](https://travis-ci.org/ah01/pio-advanced-sample.svg?branch=master)](https://travis-ci.org/ah01/pio-advanced-sample)
+
 List of goals for this sample
 
 - *HAL* - be able to compile code for multiple HWs
