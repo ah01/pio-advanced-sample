@@ -36,4 +36,9 @@ int main(int argc, const char *argv[])
     }
 }
 
+#else
+
+#include "Arduino.h"
+#include "ArduinoUnit.h"
+
 #endif

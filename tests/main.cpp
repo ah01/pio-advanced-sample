@@ -39,6 +39,10 @@ test(core_counter_max_value)
 
 void setup()
 {
+    #if ARDUINO
+    Serial.begin(9600);
+    while(!Serial) {} // Portability for Leonardo/Micro
+    #endif
 }
 
 void loop()
