@@ -37,12 +37,27 @@ void hal_error_led(bool state)
 
 void hal_disp_erase()
 {
-    Display.set4(0, 0, 0, 0);
+    Display.set(0, 0);
+    Display.set(0, 1);
+    Display.set(0, 2);
+    Display.num(0, 3);
 }
 
 void hal_disp_show(unsigned int number)
 {
-    Display.number(number);
+    byte a = number / 10;
+    byte b = number % 10;
+
+    Display.set(0, 0);
+    Display.set(0, 1);
+    
+    if (a > 0) {
+        Display.num(a, 2);
+    } else {
+        Display.set(0, 2);
+    }
+    
+    Display.num(b, 3);
 }
 
 void hal_setup()
