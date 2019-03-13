@@ -1,38 +1,28 @@
-# Continuous Integration (CI) is the practice, in software
-# engineering, of merging all developer working copies with a shared mainline
-# several times a day < http://docs.platformio.org/page/ci/index.html >
-#
-# Documentation:
-#
-# * Travis CI Embedded Builds with PlatformIO
-#   < https://docs.travis-ci.com/user/integration/platformio/ >
-#
-# * PlatformIO integration with Travis CI
-#   < http://docs.platformio.org/page/ci/travis.html >
-#
-# * User Guide for `platformio ci` command
-#   < http://docs.platformio.org/page/userguide/cmd_ci.html >
-#
-#
-# Please choice one of the following templates (proposed below) and uncomment
-# it (remove "# " before each line) or use own configuration according to the
-# Travis CI documentation (see above).
-#
-
 language: python
 python:
-    - "2.7"
-#
+- '2.7'
 sudo: false
 cache:
-    directories:
-        - "~/.platformio"
-#
+  directories:
+  - "~/.platformio"
 install:
-    - pip install -U platformio
-    - platformio update
-#
+- pip install -U platformio
+- platformio update
 script:
-    - platformio run
-    - platformio run -e test_linux
-    - ./.pioenvs/test_linux/program
+- platformio run
+- platformio run -e test_linux
+- "./.pioenvs/test_linux/program"
+before_deploy:
+# Set up git user name and tag this commit
+- git config --local user.name "ah01"
+- git config --local user.email "horcicaa@gmail.com"
+- export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
+- git tag $TRAVIS_TAG
+deploy:
+  provider: releases
+  api_key:
+    secure: Ylnl8lVFOUZddkehhoYLLdQsBJbkn+GRgd2tejMAdyWeMNwm+B1Yd5GTVEepabczEwj288TseCCDQ6e/SwQUHLmcNdfcCaAb2PmK3Et3wtPrTfD20HAmCvWnobPK147mc8P4GeKsbbNnXRrSKcL2h8NkbZ9TlHibX8XsmFIAHsIfT9CaP6tW4lxaF0V1QkM+fABA6Ld9YOEeGnAsuHr8bXHJr+FYhGbTHFh1qFdbwey+K9uCRXTnfZBudrcRxCRMkf0IoHWN0GP+y0iMwP9myt5Sxd6OyA1DpPC5iOB+d9HqbbOrvKFd1uT0Qe6d32ijOoIHSsQYzyofsT5Ee9AYTBVizuNZJvn0dhVJoBZrRUE/SG8bqzvoHO2ncELGu4xCRxqcZbAaXpLywG1pYUb9Roj2XLNusCKqOyWypQXkCdmw+dio+FmysckPRCoW/uv3oulQPdgbcWAS8UdSrD+P7uQXzfShlH+6bBD2hpo/pOgIa8KxGnB0SlSoWlAnXv9SIg1LImQsq3a1ejBoNkH1nZo7DnER0+VQUOz8lgeJeDDVv3yUBYY3ywvKlfUOGY/lNsCEcA3U5efcC7eRWosInQvpEYd2pIlujnnmPqsQvbZFIvETOzBGKlLulv+FwGBzQS5Duu32p7VrY1MQJ0qOoqBC3DCzL68ZCdjgVcefrkI=
+  file: ".pioenvs/edu/firmware.hex"
+  skip_cleanup: true
+  on:
+    repo: ah01/pio-advanced-sample
